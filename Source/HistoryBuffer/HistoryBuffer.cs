@@ -134,6 +134,12 @@ namespace HistoryBuffer
             HistoryUndid?.Invoke(this, eventArgs);
         }
 
+        public void Clear()
+        {
+            _history.Clear();
+            CurrentIndex = -1;
+        }
+
         public IEnumerable<T> GetAll()
         {
             return _history.ToList();

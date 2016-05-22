@@ -158,5 +158,23 @@ namespace HistoryBuffer.Tests
                 "second item", "third item"
             });
         }
+
+        [Test]
+        public void Can_clear_history()
+        {
+            //arrange
+            var history = new HistoryBuffer<string>(maxSize: 2);
+
+            //act
+            history.RememberNew("first item");
+            history.RememberNew("second item");
+            history.RememberNew("third item");
+
+            history.Clear();
+
+            //assert
+            history.Count.Should().Be(0);
+            history.GetAll().ToArray().Should().BeEmpty();
+        }
     }
 }
