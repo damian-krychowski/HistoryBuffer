@@ -110,9 +110,11 @@ namespace HistoryBuffer
             CurrentIndex--;
         }
 
+        public bool CanRepeat => CurrentIndex < MaxHistoryIndex;
+
         public void Repeat()
         {
-            if (CurrentIndex >= MaxHistoryIndex) return;
+            if (!CanRepeat) return;
 
             var eventArgs = HistoryEventArgs<T>.BothItems(
                 currentItem: NextItem,
@@ -122,9 +124,11 @@ namespace HistoryBuffer
             HistoryRepeated?.Invoke(this, eventArgs);
         }
 
+        public bool CanUndo => CurrentIndex > 0;
+
         public void Undo()
         {
-            if (CurrentIndex <= 0) return;
+            if (!CanUndo) return;
 
             var eventArgs = HistoryEventArgs<T>.BothItems(
                 currentItem: PreviousItem,
